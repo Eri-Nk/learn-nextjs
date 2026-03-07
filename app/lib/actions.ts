@@ -39,10 +39,17 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    await signIn("credentials", {
+    // updated code from chatgpt cause of the redirects
+    // and no error message in deployed vercel code
+    const result = await signIn("credentials", {
       ...Object.fromEntries(formData),
       redirect: false,
     });
+    if (!result || result.error) {
+      return "Invalid credentials.";
+    }
+
+    return undefined;
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
