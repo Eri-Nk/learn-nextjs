@@ -23,7 +23,6 @@ const FormSchema = z.object({
   date: z.string(),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
 
 export type State = {
   errors?: {
@@ -62,6 +61,8 @@ export async function authenticate(
     throw error;
   }
 }
+
+const CreateInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function createInvoice(prevState: State, formData: FormData) {
   // validate form fields using Zod
